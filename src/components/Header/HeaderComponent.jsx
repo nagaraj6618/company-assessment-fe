@@ -24,10 +24,10 @@ const HeaderComponent = () => {
         </div>
       </div>
       <div className={`bg-slate-800 text-white p-2 transition-all duration-300 ${isOpen ? 'h-auto' : 'h-0 overflow-hidden'}`}>
-        <Link to='/' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>Home</Link>
-        <Link to='/post' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>Post</Link>
-        <Link to='/login' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>Login</Link>
-        <Link to='/signup' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>SignUp</Link>
+        <Link onClick={toggleEvent} to='/' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>Home</Link>
+        <Link onClick={toggleEvent} to='/post' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>Post</Link>
+        <Link onClick={toggleEvent} to='/login' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>Login</Link>
+        <Link onClick={toggleEvent} to='/signup' className='block pl-5 py-2 hover:text-gray-300 transition duration-300'>SignUp</Link>
       </div>
     </>
   );
