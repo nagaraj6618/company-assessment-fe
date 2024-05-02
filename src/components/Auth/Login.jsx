@@ -2,31 +2,39 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BE_URL } from '../../Info/info'
 import axios from 'axios'
+import SuccessDisplay from '../MessageDisplay/SuccessDisplay'
+import ErrorDisplay from '../MessageDisplay/ErrorDisplay'
 
 const Login = () => {
   const [formData,setFormData] = useState({
     emailorusername:'',
     password:'',
   })
-
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false); 
   const siginSubmitHandler = async(e) => {
     e.preventDefault()
     console.log(formData)
     try{
       // axios.defaults.withCredentials = true;
-       axios.post(`${BE_URL}/auth/login`,formData ,{withCredentials:true})
-      .then((response) => {
+       const response = await axios.post(`${BE_URL}/auth/login`,formData ,{withCredentials:true})
         console.log(response.data)
-        localStorage.setItem('loginTime', Date.now());
         localStorage.setItem('name',response.data.data.name);
         localStorage.setItem('username',response.data.data.userName)
-        sessionStorage.setItem('name',response.data.data.name);
-      })
-
-      
+        sessionStorage.setItem('loginTime',Date.now());
+        sessionStorage.setItem('accesstoken',response.data.token);
+        setSuccess(true);
+        setTimeout(()=> {
+          setSuccess(false);
+        },1500)
+        setTimeout(()=>{
+          sessionStorage.clear();
+          localStorage.clear();
+        },10*60*1000)
     }
     catch(error){
-      console.log(error)
+      console.log(error);
+      setError(error.message);
     }
     
   
@@ -38,11 +46,11 @@ const Login = () => {
 
   }
 
-  useEffect(()=> {
-    
-  })
+
   return (
     <div className="flex items-center justify-center h-screen">
+      <ErrorDisplay error={error} setError={setError}/>
+      <SuccessDisplay success={success} message='Login Successfull!'/>
       <form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={siginSubmitHandler}>
         <div className="mb-4">
           <label className="block text-sm text-white mb-2" htmlFor="email">
