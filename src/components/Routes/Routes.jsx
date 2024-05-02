@@ -7,13 +7,13 @@ import Post from '../Post/Post';
 
 const RoutesComponent = () => {
   const navigate = useNavigate();
-  function naviagtion () {
+  function naviagtionFunction () {
     if(!sessionStorage.getItem('accesstoken')){
     navigate('/login')
     }
   }
   useEffect(() => {
-    naviagtion()
+    naviagtionFunction()
   },[])
   return (
     <Routes>

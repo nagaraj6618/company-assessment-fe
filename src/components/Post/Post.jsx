@@ -33,7 +33,7 @@ const Post = () => {
       setLoading(true);
       console.log(error.message);
       
-      setError(error.message); // Set error message in state
+      setError(error.response.data.message); // Set error message in state
     }
   }
 
