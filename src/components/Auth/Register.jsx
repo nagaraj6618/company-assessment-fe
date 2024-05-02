@@ -4,9 +4,11 @@ import ErrorDisplay from '../MessageDisplay/ErrorDisplay';
 import SuccessDisplay from '../MessageDisplay/SuccessDisplay';
 import axios from 'axios'
 import { BE_URL } from '../../Info/info';
+import { AiOutlineEyeInvisible,AiOutlineEye } from "react-icons/ai";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [showPassword , setShowPassword] = useState(false);
   const [formData,setFormData] = useState({
     email:'',
     password:'',
@@ -52,11 +54,14 @@ const Register = () => {
     setFormData((prev) => ({...prev,[e.target.id]:e.target.value}))
 
   }
+  const passwordToggle = () => {
+    setShowPassword(!showPassword);
+  }
   return (
     <div className="flex items-center justify-center h-screen">
       <ErrorDisplay error={error} setError={setError}/>
       <SuccessDisplay success={success} message='Login Successfull!'/>
-      <form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={siginSubmitHandler}>
+      <form className="bg-white shadow-md rounded px-16 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={siginSubmitHandler}>
       <div className="mb-4">
           <label className="block text-sm text-white mb-2" htmlFor="name">
             Name
@@ -107,12 +112,22 @@ const Register = () => {
           <input 
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
-          type="password" 
+          type={showPassword?'text':'password'} 
           placeholder="Password"
           required
           onChange={inputChangeHandler}
           />
-
+          {
+            showPassword
+            ?
+            <AiOutlineEye 
+            className='text-white relative bottom-7 left-full mx-2 size-5' 
+            onClick={passwordToggle}/>
+            :
+            <AiOutlineEyeInvisible 
+            className='text-white relative bottom-7 left-full mx-2 size-5' 
+            onClick={passwordToggle}/>
+          }
         </div>
         <div className="mb-6">
           <label className="block  text-sm  text-white mb-2" htmlFor="confirmpassword">
@@ -126,6 +141,8 @@ const Register = () => {
           required
           onChange={inputChangeHandler}
           />
+
+          
 
         </div>
         <div>

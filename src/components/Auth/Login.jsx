@@ -4,8 +4,10 @@ import { BE_URL } from '../../Info/info'
 import axios from 'axios'
 import SuccessDisplay from '../MessageDisplay/SuccessDisplay'
 import ErrorDisplay from '../MessageDisplay/ErrorDisplay'
-
+import { AiOutlineEyeInvisible,AiOutlineEye } from "react-icons/ai";
 const Login = () => {
+  const[showPassword , setShowPassword] = useState(false);
+
   const [formData,setFormData] = useState({
     emailorusername:'',
     password:'',
@@ -53,9 +55,13 @@ const Login = () => {
 
   }
 
+  const passwordToggle = () => {
+    setShowPassword(!showPassword);
+  }
 
   return (
     <div className="flex items-center justify-center h-screen">
+    
       <ErrorDisplay error={error} setError={setError}/>
       <SuccessDisplay success={success} message='Login Successfull!'/>
       <form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={siginSubmitHandler}>
@@ -80,11 +86,15 @@ const Login = () => {
           <input 
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="password"
-          type="password" 
+          type={showPassword?'text':'password'} 
           placeholder="Password"
           onChange={inputChangeHandler}
-          />
 
+          />
+          {
+            showPassword ?<AiOutlineEye className='text-white relative bottom-7 left-full mx-2 size-5' onClick={passwordToggle}/>:<AiOutlineEyeInvisible className='text-white relative bottom-7 left-full mx-2 size-5' onClick={passwordToggle}/>
+          }
+          
         </div>
         <div className="flex items-center justify-between">
           <button className="bg-blue-500 transition hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"
