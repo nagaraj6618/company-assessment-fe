@@ -45,6 +45,9 @@ const Reset = () => {
             if(error.response){
                setError(error.response.data.message)
             }
+            else{
+               setError(error.message)
+            }
          
          }
       }
