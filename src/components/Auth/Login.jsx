@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BE_URL } from '../../Info/info'
 import axios from 'axios'
@@ -26,11 +26,13 @@ const Login = () => {
         setSuccess(true);
         setTimeout(()=> {
           setSuccess(false);
+          window.location.href='/post'
         },1500)
         setTimeout(()=>{
           sessionStorage.clear();
           localStorage.clear();
         },10*60*1000)
+        
     }
     catch(error){
       console.log(error);
@@ -53,7 +55,7 @@ const Login = () => {
       <SuccessDisplay success={success} message='Login Successfull!'/>
       <form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={siginSubmitHandler}>
         <div className="mb-4">
-          <label className="block text-sm text-white mb-2" htmlFor="email">
+          <label className="block text-sm text-white mb-2" htmlFor="emailorusername">
             Email/Username
           </label>
           <input 
