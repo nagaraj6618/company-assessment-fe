@@ -60,7 +60,7 @@ const Register = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <ErrorDisplay error={error} setError={setError}/>
-      <SuccessDisplay success={success} message='Login Successfull!'/>
+      <SuccessDisplay success={success} message='Register Successfull!'/>
       <form className="bg-white shadow-md rounded px-16 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={siginSubmitHandler}>
       <div className="mb-4">
           <label className="block text-sm text-white mb-2" htmlFor="name">

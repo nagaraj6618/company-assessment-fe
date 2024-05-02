@@ -40,6 +40,9 @@ const Home = () => {
             <button className='block bg-white text-slate-800 px-2 py-1 rounded cursor-pointer hover:text-slate-800 transition duration-300  ' onClick={logoutHandler}>
               Logout
             </button>
+          </div >
+          <div className='align-middle'>
+            <Link to='password-reset' className='bg-white align-middle text-slate-800 px-2 py-1 rounded'> Reset Password</Link>
           </div>
           </div>
           
