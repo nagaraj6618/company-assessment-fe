@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import ErrorDisplay from '../MessageDisplay/ErrorDisplay';
+import axios from 'axios';
+import { BE_URL } from '../../Info/info';
+import SuccessDisplay from '../MessageDisplay/SuccessDisplay';
 const Reset = () => {
    const [error, setError] = useState(null);
    const [success, setSuccess] = useState(false); 
@@ -11,15 +14,39 @@ const Reset = () => {
          confrimnewpassword:''
       }
    )
-   const passwordResetHandler = (e) => {
+   const passwordResetHandler = async(e) => {
       e.preventDefault();
       console.log(passwordData);
 
-      if(passwordData.newpassword != passwordData.confrimnewpassword){
+      if(passwordData.oldpassword === passwordData.newpassword){
+         setError("Old and New password are same")
+      }
+      else if(passwordData.newpassword != passwordData.confrimnewpassword){
          setError("Password Not Matched")
       }
+      
       else{
-
+         try{
+            const token = sessionStorage.getItem('accesstoken');
+            const response = await axios.post(`${BE_URL}/auth/password-reset`,passwordData,
+         {
+            headers:{
+               token:token
+            }
+         })
+         console.log(response)
+         setSuccess(true);
+         setTimeout(()=> {
+            setSuccess(false);
+         },1500)
+         }
+         catch(error){
+            console.log(error)
+            if(error.response){
+               setError(error.response.data.message)
+            }
+         
+         }
       }
    }
    const inputChangeHandler = (e) => {
@@ -28,6 +55,7 @@ const Reset = () => {
   return (
     <div className="flex items-center justify-center h-screen">
       <ErrorDisplay error={error} setError={setError}/>
+      <SuccessDisplay success={success} message='Updated Successfull!'/>
       <form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4 dark:bg-slate-800 text-black" onSubmit={passwordResetHandler}>
         <div className="mb-4">
           <label className="block text-sm text-white mb-2" htmlFor="oldpassword">
