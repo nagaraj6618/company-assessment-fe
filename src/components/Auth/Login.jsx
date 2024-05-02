@@ -36,7 +36,12 @@ const Login = () => {
     }
     catch(error){
       console.log(error);
+      if(!error.response){
+        setError(error.message);
+      }
+      else {
       setError(error.response.data.message);
+      }
     }
     
   
